@@ -15,16 +15,23 @@ bankaccount::bankaccount(string naam,int accno)
 {
 	name=naam;
 	accountno=accno;
+	balance=0;
+	size=10;
+	transactions=nullptr;
+	transactions=new int[size];
+	nooftrans=0;
+	limit=200000;
 }
 void bankaccount::deposit(int amount)
 {
-	if(balance+amount<limit)
+	if(balance+amount<limit)//if the limit is not exceeded
 	{
 		balance+=amount;
-		if(nooftrans<size)
+		if(nooftrans<size)//check for limit of no of transaction
 		{
 			transactions[nooftrans]=amount;
 			nooftrans++;
+			cout<<"successfull";
 		}
 		else
 		{
@@ -39,13 +46,14 @@ void bankaccount::deposit(int amount)
 		cin>>a;
 		if(a=='y'||a=='Y')
 		{
-			limit=2*(balance+amount);
+			limit=2*(balance+amount);//double the limit of balance
 			balance+=amount;
 			balance-=500;
-			if(nooftrans<size)
+			if(nooftrans<size)//check for limit of no of transaction
 			{
 				transactions[nooftrans]=amount;
 				nooftrans++;
+				cout<<"successfull";
 			}
 			else
 			{
@@ -60,10 +68,11 @@ void bankaccount::withdraw(int amount)
 	if(balance>amount)
 	{
 		balance-=amount;
-		if(nooftrans<size)
+		if(nooftrans<size)//check for limit of no of transaction
 		{
 			transactions[nooftrans]=-amount;
 			nooftrans++;
+			cout<<"successfull";
 		}
 		else
 		{
@@ -72,7 +81,7 @@ void bankaccount::withdraw(int amount)
 		}
 	}
 }
-void bankaccount::increasecapacity()
+void bankaccount::increasecapacity()//increase in the capacity of array
 {
 	int *tempo=new int[size];
 	size*=2;
@@ -87,11 +96,11 @@ void bankaccount::increasecapacity()
 void bankaccount::print()
 {
 	cout<<"Account holder's Name : "<<name;
-	cout<<"Account number : "<<accountno;
-	cout<<"Balance : "<<balance;
-	cout<<"No. of transactions : "<<nooftrans;
+	cout<<"\nAccount number : "<<accountno;
+	cout<<"\nBalance : "<<balance;
+	cout<<"\nNo. of transactions : "<<nooftrans<<endl;
 	for(int i=0;i<nooftrans;i++)
-		cout<<i+1<<"th transaction"<<transactions[i];
+		cout<<(i+1)<<"th transaction"<<transactions[i]<<endl;
 }
 bankaccount::~bankaccount()
 {
